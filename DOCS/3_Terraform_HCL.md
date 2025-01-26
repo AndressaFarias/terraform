@@ -1,10 +1,10 @@
-
 # HCL
-É um yaml/yml melhorado/modificado.
+    É um yaml/yml melhorado/modificado.
 
 ## Blocos
 
-É qualquer bloco de código.  Compreendido por chaves.
+É qualquer bloco de código.
+ Compreendido por chaves.
 
 [tipo][subtipo][nome]{...}
 _exemplo:_

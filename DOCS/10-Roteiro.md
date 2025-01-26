@@ -13,7 +13,7 @@ docker run -it -v $PWD:/app -w /app --entrypoint "" hashicorp/terraform:light sh
     export AWS_SECRET_ACCESS_KEY=<Secret access key>
     ~~~
 
-6. Executar o comando `terraform init` - cria a pasta terraform
+6. Executar o comando `terraform init` - cria a pasta .terraform
     Pasta <tf_project_a1_v1>
 
 # tf_project_a1_v2
