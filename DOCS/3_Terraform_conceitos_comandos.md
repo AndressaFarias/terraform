@@ -31,6 +31,10 @@ Esse arquivo de estado, salvo localmente **não é algo seguro**, sendo então i
 
 O plano gerado pelo destoy pode ser aplicado.
 
+Variaveis é possivel passar ela diretamente no comando de terraform:
+
+`terraform plan -out plano -var="image_id=ami-abc123`
+
 # terraform console
 para sair `exit`, `ctrl + c` ou `ctrl + d`
 e uma ferramenta para interagir com o state, possibilida entender o que está sendo feito ; 
@@ -105,15 +109,15 @@ Para declarar um variavel será utilizado o bloco `variable` e esse bloco não p
     ~~~
     dentro de um bloco podem ser usados alguns argumentos:
 
-   * default : possibilita definir um valor padrão; oferece uma valor padrão para uma variavel, se o default, não for declarado é obrigatório que o valor seja informado;
+   * `default` : possibilita definir um valor padrão; oferece uma valor padrão para uma variavel, se o default, não for declarado é obrigatório que o valor seja informado;
 
-   * type constraints : indica o tipo do valor que é esperado para aquela variavel declarada; (string, number, bool, listas de tipos primitivos);
+   * `type constraints` : indica o tipo do valor que é esperado para aquela variavel declarada; (string, number, bool, listas de tipos primitivos);
 
-   * description : descrição de qual o intuito pelo qual a variavel foi criada;
+   * `description` : descrição de qual o intuito pelo qual a variavel foi criada;
 
-   * custom validation rules - condition : informa qual a condição de validação para que o valor seja aceito.
+   * `custom validation rules` - condition : informa qual a condição de validação para que o valor seja aceito.
 
-   * sensitive : quando definido como true, esse valor não é apresentado na console.
+   * `sensitive` : quando definido como true, esse valor não é apresentado na console.
 
     ~~~yaml
     variable "image_id"{
@@ -127,6 +131,11 @@ Para declarar um variavel será utilizado o bloco `variable` e esse bloco não p
         }
     } 
     ~~~
+
+    * `nullable`: indica que a variavel pode ser _null_/ Se nullable = true geralmente não faz sentido que a variavel tenha um valor _default_
+
+## tfvars
+
 
 ## USANDO VARIAVEIS
 * pode ser declarado na linha de comando:
