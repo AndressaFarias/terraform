@@ -20,8 +20,16 @@ Esse arquivo de estado, salvo localmente **não é algo seguro**, sendo então i
 `terraform apply`
     aplica o que foi definido no plan  e cria o arquivo de estado;
 
-`terraform destroy`
-    destroy udo o qu está no HCL.
+`terraform destroy` 
+    destroy tudo o qu está no HCL.
+
+`terraform plan -destroy`
+    gera um plano de destruição
+
+`terraform plan -destroy -out destruir`
+`terraform apply "destruir"`
+
+O plano gerado pelo destoy pode ser aplicado.
 
 # terraform console
 para sair `exit`, `ctrl + c` ou `ctrl + d`
