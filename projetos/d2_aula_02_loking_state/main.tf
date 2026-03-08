@@ -25,4 +25,3 @@ resource "aws_instance" "web" {
     região     = data.aws_ami.ubuntu.region
   }
 }
-
