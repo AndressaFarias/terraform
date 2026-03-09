@@ -221,14 +221,40 @@ Não é preciso informar todos os dados para a configuração no bloco do backen
 * pela console - no init
 * variavel de ambiente : apenas alguns backends aceitam esse tipo de configuração.
 
+# state
+O state garante a consistencia do que há no código com o que tem no mundo real.
+
+Quando um recurso e deletado do código (HCL) o binário do Terraform ao consultar o _state_ identifica que havia um recurso e que ele foi excluido do HCL, então o binário do Terraform entende que deve ser feita a exclusão do recurso do provider.
+
+
+## Comandos
+
+`terraform state`
+`terraform state --help` # Retorna os comandos disponiveis
+`terraform state list`
+`terraform state show`
+
+`terraform state pull`
+`terraform state pull > state.json`# A saida é salva em um arquivo json
+`terraform state pull | jq .` formata toda a saida em json
+`terraform state pull | jq .outpus` # será feita a saida apenas do que está na chave de outputs
+
+
+
+
 ## State Storage and Locking
 * Nem todos os backends possuem suporte o locking;
 * `terraform state pull >> state-local.tfstate` esse comando baixa o tfstate para estar acesivel localmente
 * `terraform state push state-local.tfstate`:: state-local.tfstate é o nome do arquivo state que se deseja subir.
     * se for feita alguma alteração no arquivo de estate será preciso incrementar o parametro serial, para que não retorne erro referente ao fato de o arquivo ter sofrido alteração e ainda possuir o mesmo serial.
 
-### State Locking
+
+## State Locking
+O state é colocado em um ambiente remoto, com o intuito de que todos os membros do time possam ter acesso ao memso arquivo de state. Porém o ideal é que cada pessoa só mofique o state por vez, havendo conflito de alteraçoes.
+
 Permite que seja bloqueada a escrita no arquivo de state.
+
+
 
 # STATE
 <https://www.terraform.io/docs/language/state/index.html>
@@ -242,3 +268,11 @@ Pq o Terraform não funciona sem state?
    - Faz o mapeamento de dependencias entres os recursos, através do metadata;
    - Performance : --refreshing=false (!buscar mais infos)
    - Syncing : 
+
+# Workspaces
+
+`terraform workspace --help`
+`terraform workspace list`
+`terraform workspace new <nome>`
+`terraform workspace show`
+
