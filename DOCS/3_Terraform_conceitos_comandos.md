@@ -158,6 +158,7 @@ precedencia : export < tfvars < auto < linha de comando (`-var-file` ou `-var`)
 # Blocos
 ## output
    tipo de bloco `output`: permite que um determinado valor seja "printado" na tela.
+
    _exemplo_ 
    arq: **output.tf**
    ~~~ yaml
@@ -276,3 +277,57 @@ Pq o Terraform não funciona sem state?
 `terraform workspace new <nome>`
 `terraform workspace show`
 
+# Tipos de mudanças
+Tipos de mudanças que são indicadas quando executamos o `terraform plan`.
+O Terraform classifica as mudanças planejadas para cada resource usando alguns rotulos no output. Esses rótulos indicam qual a operação será executada naquele recurso quando o comando `terraform apply`for executado. 
+Não há uma tabela explicita do que cada rótulo significa, mas eles são derivaos do **lifecycle de recursos e do do diff engine do Terrafor**
+
+## will be update in-place
+SIGNIFICADO : O recurso já existe e será modificado sem ser recriado
+    - Terraform achama API de update do provider
+    - O ID do recurso permanece o mesmo
+    - Não há downtime por recriação (dependendo do recurso)
+
+## must be replaced
+SIGNIFICADO: o recurso não pode ser alterado diretamente. Então o Terraform fará um `destroy + create`.
+    - Cria um novo recurso
+    - remove o antigo
+    - ou dependendo do lifecycle `create_befora_destroy`
+
+Isso acontece pois no provider alguns recurso são marcados como `ForceNew`, isso significa que, qualquer mudança no atributo exige que o recurso seja recriado. Exemplos
+    - EC2 -> subnet_id
+    - RDS -> storage_encryptec
+    - EKS nodegroup -> subnet
+    - S3 bucket -> bucket name
+
+## has changed
+SIGNIFICADO: É apenas um resumo indicando que houve alteraçoes detectadas. Ele não define a operação sozinho. A operação que de fato será realizada está indicada pelos simbolos:
++   create              recurso será criado
+-   destroy             recurso será removido
+~   update in-place     update in-place
+-/+ replace             destrou + create
+
+### Outros simbolos importantes no Terrafor plan
+<=  data read           data source será lido
+
+## will be create
+
+## will be destroyed
+
+## will be read during apply
+(data sources)
+
+
+## Regra prática usada por quem opera Terraform em produção
+`-/+ (replaced)`
+- downtime
+- recriaçao de infraestrutura
+- perda de dados (dependendo do recurso)
+
+Depois verificar:
+`~ (update)`
+Geralmente é seguro
+
+# import
+
+# MÓDULOS
